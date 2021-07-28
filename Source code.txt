@@ -1,0 +1,25 @@
+/ip fi address-list
+add address=11.15.0.0/24 list=expired
+/ip fi nat
+add action=redirect chain=dstnat comment=>>>ISOLIR<< dst-port=80,443 protocol=tcp src-address-list=expired \
+    to-ports=3127
+add action=redirect chain=dstnat comment=>>>ISOLIR<< dst-port=80,443 protocol=udp src-address-list=expired \
+    to-ports=3127
+/ip pool
+add name=Isolir ranges=11.15.0.1-11.15.0.15
+/ppp profile
+add name=ISOLIR rate-limit=128K/128K remote-address=Isolir
+/ip proxy
+set cache-administrator=EkaSaputra enabled=yes max-cache-size=none max-fresh-time=1h port=3127 \
+    src-address=0.0.0.0
+/ip proxy access
+add comment="Allow port 3127 Isolir" dst-port=3127 src-address=11.15.0.0/24
+add action=deny comment="Mengarahkan Ip Isolir Ke halaman isolir" dst-host=!bnetwork.xyz \
+    redirect-to=192.168.1.4:3127 src-address=11.15.0.0/24
+add action=deny comment=\
+    "Mengarahkan user hotspot yang tidak di isolir ke google jika mengakses port 3127" dst-port=\
+    3127 redirect-to=google.com src-address=192.168.96.0/24
+add action=deny comment=\
+    "Mengarahkan user PPPOE yang tidak di isolir ke google jika mengakses port 3127" dst-port=\
+    3127 redirect-to=google.com src-address=192.168.100.0/24
+

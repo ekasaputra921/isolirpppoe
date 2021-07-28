@@ -1,0 +1,18 @@
+MEMBUAT HALAMAN ISOLIR PPPOE..
+
+Disini saya memanfaatkan error.html web proxy sebagai tampilan halaman isolir.
+
+Mikrotik
+Eth1 (Ke Modem) : 192.168.1.4
+Ip hotspot: 192.168.96.0/24
+Ip PPPOE : 192.168.100.0/24
+
+Bahan :
+1. Halaman Isolir. 
+2. Download File nya, berisi halaman isolir, dan file export.
+
+Tutorial 1
+1. Ekstrak FIle hasil download, dan buka file Tutorial 1, edit file tersebut dan sesuaikan dengan IP Di mikrotik anda.
+2. Setelah anda sesuaikan, copy isi file dan paste ke new terminal
+3. Upload file error.html ke dalam folder web proxy (gambar1) (jika folder web-proxy tidak ada, masuk ke IP-Web Proxy Reset HTML (Gambar2))
+4. Selanjutnya, silahkan di coba, dengan membuat user PPPOE dan arahkan ke profile ISOLIR (Gambar3)
